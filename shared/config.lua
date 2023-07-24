@@ -26,7 +26,10 @@ function Debug(...)
 end
 
 Config.PoliceJobNames = {  -- add multiple police jobs that are allowed to raid properties!
-    "police",
+    "lspd",
+    "bcso",
+    "sasp",
+    "sapr",
     -- "police2",
     -- "police3",
 }
