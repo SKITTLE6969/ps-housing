@@ -3,7 +3,7 @@ fx_version 'cerulean'
 game "gta5"
 
 author "Xirvin#0985 and Project Sloth"
-version '1.0.0'
+version '1.0.3'
 
 repository 'Project-Sloth/ps-housing'
 
@@ -20,8 +20,6 @@ shared_script {
   }
 
 client_script {
-  '@PolyZone/client.lua',
-  '@PolyZone/BoxZone.lua',
   'client/apartment.lua',
   'client/cl_property.lua',
   'client/client.lua',

@@ -327,6 +327,7 @@ Modeler = {
     -- maybe should do it all at once when the user leaves the menu????
     UpdateFurniture = function (self, item)
         local newPos = GetEntityCoords(item.entity)
+        local newRot = GetEntityRotation(item.entity)
 
         local offsetPos = {
                 x = math.floor((newPos.x - self.shellPos.x) * 10000) / 10000,
@@ -339,7 +340,7 @@ Modeler = {
             label = item.label,
             object = item.object,
             position = offsetPos,
-            rotation = item.rotation,
+            rotation = newRot,
             type = item.type,
         }
 
@@ -427,7 +428,7 @@ Modeler = {
         local items = {}
         local totalPrice = 0
 
-        -- If the cart is empty, return notify
+	-- If the cart is empty, return notify
         if not next(self.Cart) then
             lib.notify({title= "Your cart is empty", type = "error"})
             return
@@ -439,7 +440,7 @@ Modeler = {
         end
 
         local PlayerData = QBCore.Functions.GetPlayerData()
-        if PlayerData.money.cash < totalPrice then
+        if PlayerData.money.cash < totalPrice and PlayerData.money.bank < totalPrice then
             lib.notify({title= "You don't have enough money!", type = "error"})
             return
         end

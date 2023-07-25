@@ -241,7 +241,6 @@ Framework.qb = {
         TriggerServerEvent("inventory:server:OpenInventory", "stash", stash, stashConfig)
         TriggerEvent("inventory:client:SetCurrentStash", stash)
     end,
-
 }
 
 Framework.ox = {
