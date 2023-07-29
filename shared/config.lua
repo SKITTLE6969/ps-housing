@@ -35,7 +35,6 @@ Config.PoliceJobNames = {  -- add multiple police jobs that are allowed to raid 
 }
 
 Config.MinGradeToRaid = 3  -- Minimum grade to raid a property
-Config.RealtorJobName = "realestate" -- Set your Real Estate here
 Config.RaidTimer = 5-- 5 minutes
 Config.DynamicDoors = true
 

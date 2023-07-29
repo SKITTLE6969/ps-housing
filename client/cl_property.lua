@@ -20,6 +20,7 @@ Property = {
     exitTarget = nil,     -- needed for ox target
 
     blip = nil,
+    blip2 = nil,
 }
 Property.__index = Property
 
@@ -517,25 +518,48 @@ end
 
 function Property:CreateBlip()
     local door_data = self.propertyData.door_data
+    local garage_data = self.propertyData.garage_data
     local blip = AddBlipForCoord(door_data.x, door_data.y, door_data.z)
-    if self.propertyData.garage_data.x ~= nil then
-        SetBlipSprite(blip, 492)
-    else
+    local blip2 = nil
+    
+    if garage_data.x ~= nil then
+        blip2 = AddBlipForCoord(garage_data.x, garage_data.y, garage_data.z)
+        SetBlipSprite(blip2, 524)
+        SetBlipScale(blip2, 0.6)
+        SetBlipColour(blip2, 2)
+        SetBlipAsShortRange(blip2, true)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentString(self.propertyData.street .. self.property_id .. " Garage")
+        EndTextCommandSetBlipName(blip2)
+
         SetBlipSprite(blip, 40)
+        SetBlipScale(blip, 0.6)
+        SetBlipColour(blip, 2)
+        SetBlipAsShortRange(blip, true)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentString(self.propertyData.street .. " " .. self.property_id)
+        EndTextCommandSetBlipName(blip)
+    else
+        blip2 = nil
+        SetBlipSprite(blip, 40)
+        SetBlipScale(blip, 0.6)
+        SetBlipColour(blip, 2)
+        SetBlipAsShortRange(blip, true)
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentString(self.propertyData.street .. " " .. self.property_id)
+        EndTextCommandSetBlipName(blip)
     end
-    SetBlipScale(blip, 0.8)
-    SetBlipColour(blip, 2)
-    SetBlipAsShortRange(blip, true)
-    BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString(self.propertyData.street .. " " .. self.property_id)
-    EndTextCommandSetBlipName(blip)
+
     self.blip = blip
+    self.blip2 = blip2
 end
 
 function Property:RemoveBlip()
     if not self.blip then return end
     RemoveBlip(self.blip)
+    RemoveBlip(self.blip2)
     self.blip = nil
+    self.blip2 = nil
 end
 
 function Property:RemoveProperty()
