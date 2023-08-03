@@ -146,3 +146,11 @@ lib.callback.register('ps-housing:cb:showcase', function()
         }
     })
 end)
+
+function HouseTrack(propertyId)
+    local coords = PropertiesTable[propertyId].propertyData.door_data
+
+    SetNewWaypoint(coords.x, coords.y)
+end
+
+exports("HouseTrack", HouseTrack)

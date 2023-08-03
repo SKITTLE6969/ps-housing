@@ -245,3 +245,89 @@ end
 --     PSCore.Functions.CheckForUpdates()
 --     PSCore.Functions.CheckResourceName()
 -- end
+
+lib.callback.register("ps-housing:server:GetPlayerProperties", function(source)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local Properties = {}
+    local citizenid = Player.PlayerData.citizenid
+
+    while dbloaded == false do
+        Wait(2000)
+    end
+
+    for _, v in pairs(PropertiesTable) do
+        local propertyData = v.propertyData
+
+        while not propertyData do
+            Wait(500)
+        end
+
+        local checkAccess = lib.table.contains(propertyData.has_access, citizenid)
+        if propertyData.owner == citizenid or checkAccess then
+            local ownedIcon = "fas fa-car"
+            local fullName = ""
+            local Haccess = false
+            local streeto
+
+            if propertyData.street == nil and propertyData.apartment ~= nil then
+                streeto = propertyData.apartment
+                ownedIcon = "fas fa-building-user"
+            elseif propertyData.street ~= nil then
+                streeto = propertyData.street
+                ownedIcon = "fas fa-house"
+            else
+                streeto = "Something is broken"
+            end
+            local HouseName = streeto .. " " .. propertyData.property_id
+            local checkNum = #propertyData.has_access
+            local numAccess = "Shared with: " .. #propertyData.has_access .. " friends"
+
+            local query = "SELECT charinfo FROM players WHERE citizenid = ?"
+            local result = MySQL.Sync.fetchScalar(query, {propertyData.owner})
+            if result then
+                local charInfoData = json.decode(result)
+                if charInfoData and charInfoData.firstname and charInfoData.lastname then
+                    local firstName = charInfoData.firstname
+                    local lastName = charInfoData.lastname
+                    fullName = firstName .. " " .. lastName
+                end
+            end
+
+            if propertyData.owner == citizenid then
+                if checkNum < 1 then
+                    numAccess = "Not shared"
+                elseif checkNum == 1 then
+                    numAccess = "Shared with: " .. #propertyData.has_access .. " friend"
+                else
+                    numAccess = "Shared with: " .. #propertyData.has_access .. " friends"
+                end
+                Haccess = true
+            else
+                numAccess = "It's not your property"
+                Haccess = false
+            end
+
+            Properties[#Properties + 1] = {
+                fullname = fullName,
+                houseName = HouseName,
+                streetName = streeto,
+                shellName = propertyData.shell,
+                ownedIcon = ownedIcon,
+                propertyId = propertyData.property_id,
+                has_access = Haccess,
+                has_access_cid = propertyData.has_access,
+                numAccess = numAccess,
+                numAccessNum = #propertyData.has_access,
+            }
+        end
+    end
+    return Properties
+end)
+
+RegisterServerEvent('setPlayerWaypoint')
+AddEventHandler('setPlayerWaypoint', function(source, waypointData)
+    local x = PropertiesTable[waypointData].propertyData.door_data.x
+    local y = PropertiesTable[waypointData].propertyData.door_data.y
+
+    TriggerClientEvent("setWaypointHouse", x, y)
+end)
