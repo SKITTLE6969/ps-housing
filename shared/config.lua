@@ -10,7 +10,8 @@ Config = {}
 Config.Target = "ox" -- "ox" or "qb"
 Config.Notify = "ox" -- "ox" or "qb"
 Config.Radial = "ox" -- "ox" or "qb"
-Config.Inventory = "ox" -- "ox" or "qb"
+Config.Inventory = "qb" -- "ox" or "qb"
+Config.Logs = "qb" -- "qb"
 
 -- Anyone provided with keys to a property has the ability to modify its furnishings.
 Config.AccessCanEditFurniture = true
@@ -18,12 +19,17 @@ Config.AccessCanEditFurniture = true
 -- Draw the poly for the property
 Config.DebugMode = true
 
-
 function Debug(...)
     if Config.DebugMode then
         print(...)
     end
 end
+
+-- Log System
+Config.EnableLogs = true
+
+-- Enables Dynamic Doors
+Config.DynamicDoors = false
 
 Config.PoliceJobNames = {  -- add multiple police jobs that are allowed to raid properties!
     "lspd",
@@ -37,6 +43,8 @@ Config.PoliceJobNames = {  -- add multiple police jobs that are allowed to raid 
 Config.MinGradeToRaid = 3  -- Minimum grade to raid a property
 
 Config.RaidTimer = 5-- 5 minutes
+
+Config.RealtorJobName = "realtor" -- Set your Real Estate job here
 
 -- Realtor Commisions based on job grade, the rest goes to the owner, if any.
 Config.Commissions = {
@@ -1220,6 +1228,57 @@ Config.Furnitures = {
 			{ ["object"] = "apa_mp_h_acc_vase_02", ["price"] = 300, ["label"] = "vase red" },
 			{ ["object"] = "apa_mp_h_acc_vase_05", ["price"] = 300, ["label"] = "vase" },
 			{ ["object"] = "apa_mp_h_acc_vase_06", ["price"] = 300, ["label"] = "vase black and white 2" },
+        }
+    },
+
+    {
+        category = "Doors", -- All from Base Game.
+        items = {
+            { ["object"] = "v_ilev_fa_frontdoor", ["price"] = 300, ["type"] = "door", ["label"] = "White Door" },
+            { ["object"] = "v_ilev_247_offdorr", ["price"] = 300, ["type"] = "door", ["label"] = "24/7 Wooden Door" },
+            { ["object"] = "v_ilev_arm_secdoor", ["price"] = 300, ["type"] = "door", ["label"] = "Security Door" },
+            { ["object"] = "v_ilev_bank4door01", ["price"] = 300, ["type"] = "door", ["label"] = "Bank Glass Door" },
+            { ["object"] = "v_ilev_bk_gate", ["price"] = 300, ["type"] = "door", ["label"] = "Fancy Metal Gate" },
+            { ["object"] = "v_ilev_cbankcountdoor01", ["price"] = 300, ["type"] = "door",  ["label"] = "Bank Office Door" },
+            { ["object"] = "v_ilev_cd_door", ["price"] = 300, ["type"] = "door", ["label"] = "Wooden Door with Glass" },
+            { ["object"] = "v_ilev_cm_door1", ["price"] = 300, ["type"] = "door", ["label"] = "Light Blue Door" },
+            { ["object"] = "v_ilev_dev_door", ["price"] = 300, ["type"] = "door", ["label"] = "Black House Door" },
+            { ["object"] = "v_ilev_door_orangesolid", ["price"] = 300, ["type"] = "door", ["label"] = "Orange Solid Door" },
+            { ["object"] = "v_ilev_fa_backdoor", ["price"] = 300, ["type"] = "door", ["label"] = "Dirty Glass Door" },
+            { ["object"] = "v_ilev_gangsafedoor", ["price"] = 300, ["type"] = "door", ["label"] = "Gang Safe Door" },
+            { ["object"] = "v_ilev_gc_door02", ["price"] = 300, ["type"] = "door", ["label"] = "Office Door" },
+            { ["object"] = "v_ilev_janitor_frontdoor", ["price"] = 300, ["type"] = "door",  ["label"] = "White Mesh Door" },
+            { ["object"] = "v_ilev_rc_door1", ["price"] = 300, ["type"] = "door", ["label"] = "Yellow Fire Door" },
+            { ["object"] = "v_ilev_roc_door2", ["price"] = 300, ["type"] = "door", ["label"] = "Solid Red Door" },
+            { ["object"] = "v_ilev_sol_off_door01", ["price"] = 300, ["type"] = "door", ["label"] = "Solid Wooden Door" },
+            { ["object"] = "v_ilev_stad_fdoor", ["price"] = 300, ["type"] = "door", ["label"] = "Glass Door with Rails" },
+            { ["object"] = "v_ilev_tort_door", ["price"] = 300, ["type"] = "door", ["label"] = "Door with Danger Sign" },
+            { ["object"] = "v_ilev_trevtraildr", ["price"] = 300, ["type"] = "door", ["label"] = "Trailer Door" },
+            { ["object"] = "prop_cs_fridge_door", ["price"] = 300, ["type"] = "door", ["label"] = "Fridge Door" },
+            { ["object"] = "prop_artgallery_dl", ["price"] = 300, ["type"] = "door", ["label"] = "White Art Gallery Door" },
+            { ["object"] = "prop_bh1_09_mp_l", ["price"] = 300, ["type"] = "door",  ["label"] = "Weazel Plaza Door" },
+            { ["object"] = "prop_bh1_48_backdoor_l", ["price"] = 300, ["type"] = "door", ["label"] = "Black Glass Door" },
+            { ["object"] = "prop_casino_door_01r", ["price"] = 300, ["type"] = "door", ["label"] = "Casino Glass Door" },
+            { ["object"] = "prop_cs4_11_door", ["price"] = 300, ["type"] = "door", ["label"] = "White Door with Small Window" },
+            { ["object"] = "prop_cs6_03_door_r", ["price"] = 300, ["type"] = "door", ["label"] = "Antique Wooden Door" },
+            { ["object"] = "prop_grumandoor_r", ["price"] = 300, ["type"] = "door", ["label"] = "Golden Snake Door" },
+            { ["object"] = "prop_motel_door_09", ["price"] = 300, ["type"] = "door", ["label"] = "Motel Door" },
+            { ["object"] = "prop_fnclink_03gate5", ["price"] = 300, ["type"] = "door", ["label"] = "Chainlink Fence" },
+        }
+    },
+
+    {
+        category = "Walls",
+        items = {
+            { ["object"] = "ps_wall_aqua", ["price"] = 1000, ["label"] = "Aqua Wall" },
+            { ["object"] = "ps_wall_black", ["price"] = 1000, ["label"] = "Black Wall" },
+            { ["object"] = "ps_wall_green", ["price"] = 1000, ["label"] = "Green Wall" },
+            { ["object"] = "ps_wall_grey", ["price"] = 1000, ["label"] = "Grey Wall" },
+            { ["object"] = "ps_wall_purple", ["price"] = 1000, ["label"] = "Purple Wall" },
+            { ["object"] = "ps_wall_red", ["price"] = 1000, ["label"] = "Red Wall" },
+            { ["object"] = "ps_wall_white", ["price"] = 1000, ["label"] = "White Wall" },
+            { ["object"] = "ps_wall_yellow", ["price"] = 1000, ["label"] = "Yellow Wall" },
+            { ["object"] = "ps_wall_wall", ["price"] = 1000, ["label"] = "Brick Wall" },
         }
     },
 

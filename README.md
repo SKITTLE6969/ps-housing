@@ -47,6 +47,25 @@ This will open a furniture store complete with all of the props. Select an item 
 
 > Note: The place on ground button sometimes does not work properly depending on where the native detects the ground to be.
 
+## Dynamic Doors
+
+Dynamic Doors will turn placed doors into actual working doors, Instead of them being static. (See videos below)
+
+### Preview
+
+https://github.com/complexza/ps-housing/assets/74205343/72cfc135-2f78-42b3-a540-45f02567b6d7
+
+https://github.com/complexza/ps-housing/assets/74205343/0ff26e7f-1341-45fc-8fc6-d65421dec0b2
+
+### Setup
+- You will need to set the `Config.DynamicDoors = true`
+- You will have to add this convar into your server.cfg `setr game_enableDynamicDoorCreation "true"`
+
+> Note: The convar has to be in your server.cfg in order for the doors to be dynamic!
+
+### Shell Support
+* [K4MB1](https://github.com/Project-Sloth/ps-housing/wiki/K4MB1-Shells-Support-&-Offsets)
+
 # Important
 
 * Players need to place their [stash](https://github.com/Project-Sloth/ps-housing/blob/7efd2009050b9a20969877cf69b284352a9309bf/shared/config.lua#LL426C96-L426C96) and [wardrobe](https://github.com/Project-Sloth/ps-housing/blob/7efd2009050b9a20969877cf69b284352a9309bf/shared/config.lua#L427) or else they wont have one. Check [Config](https://github.com/Project-Sloth/ps-housing/blob/7efd2009050b9a20969877cf69b284352a9309bf/shared/config.lua#L422) for more information.
@@ -248,6 +267,17 @@ end)
 9. In your server.cfg, add `ensure ox_lib` above all other resources
 
 10. Install the dependencies below.
+
+## Logs System Setup
+
+1. Go to `qb-smallresources/server/logs.lua` and add this:
+```lua
+    ['pshousing'] = 'yourdiscordwebhookhere',
+```
+2. Create a webhook for the channel you want the logs to show up in.
+3. Replace the placeholder with your webhook link.
+
+> This system only supports qb-core for now.
 
 # Dependency
 1. [bl-realtor](https://github.com/Byte-Labs-Project/bl-realtor)

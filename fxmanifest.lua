@@ -3,7 +3,7 @@ fx_version 'cerulean'
 game "gta5"
 
 author "Xirvin#0985 and Project Sloth"
-version '1.0.5'
+version '1.0.8'
 
 repository 'Project-Sloth/ps-housing'
 
@@ -20,6 +20,7 @@ shared_script {
   }
 
 client_script {
+  'client/shell.lua',
   'client/apartment.lua',
   'client/cl_property.lua',
   'client/client.lua',
@@ -39,3 +40,6 @@ files {
 
 this_is_a_map 'yes'
 data_file 'DLC_ITYP_REQUEST' 'starter_shells_k4mb1.ytyp'
+
+file 'stream/**.ytyp'
+data_file 'DLC_ITYP_REQUEST' 'stream/**.ytyp'
