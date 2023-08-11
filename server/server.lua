@@ -298,11 +298,12 @@ lib.callback.register("ps-housing:server:GetPlayerProperties", function(source)
             else
                 streeto = "Something is broken"
             end
+
             local HouseName = streeto .. " " .. propertyData.property_id
             local checkNum = #propertyData.has_access
             local numAccess = "Shared with: " .. #propertyData.has_access .. " friends"
-
-            local getName = QBCore.Functions.GetPlayerByCitizenId(v.citizenid) or QBCore.Functions.GetOfflinePlayerByCitizenId(v.citizenid)
+            
+            local getName = QBCore.Functions.GetPlayerByCitizenId(propertyData.owner) or QBCore.Functions.GetOfflinePlayerByCitizenId(propertyData.owner)
             local playerData = getName.PlayerData
             if playerData then
                 fullName = playerData.charinfo.firstname .. " " .. playerData.charinfo.lastname
