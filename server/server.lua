@@ -302,15 +302,10 @@ lib.callback.register("ps-housing:server:GetPlayerProperties", function(source)
             local checkNum = #propertyData.has_access
             local numAccess = "Shared with: " .. #propertyData.has_access .. " friends"
 
-            local query = "SELECT charinfo FROM players WHERE citizenid = ?"
-            local result = MySQL.Sync.fetchScalar(query, {propertyData.owner})
-            if result then
-                local charInfoData = json.decode(result)
-                if charInfoData and charInfoData.firstname and charInfoData.lastname then
-                    local firstName = charInfoData.firstname
-                    local lastName = charInfoData.lastname
-                    fullName = firstName .. " " .. lastName
-                end
+            local getName = QBCore.Functions.GetPlayerByCitizenId(v.citizenid) or QBCore.Functions.GetOfflinePlayerByCitizenId(v.citizenid)
+            local playerData = getName.PlayerData
+            if playerData then
+                fullName = playerData.charinfo.firstname .. " " .. playerData.charinfo.lastname
             end
 
             if propertyData.owner == citizenid then
