@@ -284,17 +284,14 @@ lib.callback.register("ps-housing:server:GetPlayerProperties", function(source)
 
         local checkAccess = lib.table.contains(propertyData.has_access, citizenid)
         if propertyData.owner == citizenid or checkAccess then
-            local ownedIcon = "fas fa-car"
             local fullName = ""
             local Haccess = false
             local streeto
 
             if propertyData.street == nil and propertyData.apartment ~= nil then
                 streeto = propertyData.apartment
-                ownedIcon = "fas fa-building-user"
             elseif propertyData.street ~= nil then
                 streeto = propertyData.street
-                ownedIcon = "fas fa-house"
             else
                 streeto = "Something is broken"
             end
@@ -326,24 +323,16 @@ lib.callback.register("ps-housing:server:GetPlayerProperties", function(source)
             Properties[#Properties + 1] = {
                 fullname = fullName,
                 houseName = HouseName,
-                streetName = streeto,
                 shellName = propertyData.shell,
-                ownedIcon = ownedIcon,
                 propertyId = propertyData.property_id,
                 has_access = Haccess,
-                has_access_cid = propertyData.has_access,
                 numAccess = numAccess,
+                houseIcon = propertyData.apartment and "fa-home" or "fa-building",
                 numAccessNum = #propertyData.has_access,
+                garageStatus = propertyData.garage_data.x and "Have garage" or "Doesn't have garage"
             }
+            print("garage_data: ", propertyData.garage_data.x)
         end
     end
     return Properties
-end)
-
-RegisterServerEvent('setPlayerWaypoint')
-AddEventHandler('setPlayerWaypoint', function(source, waypointData)
-    local x = PropertiesTable[waypointData].propertyData.door_data.x
-    local y = PropertiesTable[waypointData].propertyData.door_data.y
-
-    TriggerClientEvent("setWaypointHouse", x, y)
 end)
